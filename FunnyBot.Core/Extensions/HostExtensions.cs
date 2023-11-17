@@ -2,9 +2,6 @@
 using Kook.WebSocket;
 using FunnyBot.Core.Options;
 using FunnyBot.Core.Services;
-using FunnyBot.Database.DbContexts;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -23,16 +20,18 @@ namespace FunnyBot.Core.Extensions {
                 });
         }
 
-        private static void ConfigureServices(HostBuilderContext context, IServiceCollection services) {
-            services.AddSingleton(new KookSocketClient(new KookSocketConfig {
+        private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
+        {
+            services.AddSingleton(new KookSocketClient(new KookSocketConfig
+                {
                     ConnectionTimeout = 60000
-            }))
-                .AddSingleton(_ => new CommandService(new CommandServiceConfig {
+                }))
+                .AddSingleton(_ => new CommandService(new CommandServiceConfig
+                {
                 }))
                 .AddHostedService<BotHostService>()
                 .AddHostedService<CommandHandleService>()
-                .AddHostedService<BotMarketStatusService>()
-                .AddDbContext<DefaultDbContext>(option => option.UseSqlite(context.Configuration.GetConnectionString("DefaultDbContext")));
+                .AddHostedService<BotMarketStatusService>();
 
             services.AddOptions<KookSettings>().Bind(context.Configuration.GetSection("Kook"));
             services.AddOptions<BotMarketSettings>().Bind(context.Configuration.GetSection("BotMarket"));

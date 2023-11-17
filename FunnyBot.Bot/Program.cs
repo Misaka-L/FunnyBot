@@ -1,6 +1,5 @@
 ﻿using FunnyBot.Application.Services;
 using FunnyBot.Core.Extensions;
-using FunnyBot.Database.DbContexts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -17,7 +16,6 @@ namespace FunnyBot.Bot {
         }
 
         public void ConfigureServices(HostBuilderContext context, IServiceCollection services) {
-            services.AddTransient<EchoCaveService>();
             services.AddTransient<WhatIAmService>();
         }
     }
