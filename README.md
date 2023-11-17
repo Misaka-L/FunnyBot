@@ -1,1 +1,1 @@
-# KookBotCraft
+# FuunyBot
